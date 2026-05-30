@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 export const ProductSearchSchema = z.object({
   page:          z.number().int().min(1).max(1000).default(1),
-  limit:         z.number().int().min(1).max(100).default(12),
+  limit:         z.number().int().min(1).max(1000).default(12),
   search:        z.string().max(200).nullish(),
   category:      z.string().max(100).nullish(),
   solution_type: z.string().max(100).nullish(), // filter by solution
