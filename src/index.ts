@@ -4,6 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
+import './cron/keepAlive';
 
 import { errorHandler } from './middleware/errorHandler';
 import { requireAdminKey } from './middleware/auth';
@@ -12,6 +13,7 @@ import { requireAdminKey } from './middleware/auth';
 import productsRouter   from './routes/products/index';
 import categoriesRouter from './routes/categories/index';
 import brandsRouter     from './routes/brands/index';
+import quotesRouter from './routes/quotes/index';
 
 // ── Admin routers ─────────────────────────────────────────────────────────────
 import adminProductsRouter from './routes/admin/products';
@@ -43,6 +45,7 @@ const adminLimiter  = rateLimit({ windowMs: 60_000, max: 300, standardHeaders: t
 app.use('/api/products',   publicLimiter, productsRouter);
 app.use('/api/categories', publicLimiter, categoriesRouter);
 app.use('/api/brands',     publicLimiter, brandsRouter);
+app.use('/api/quotes', publicLimiter, quotesRouter);
 
 app.post('/api/admin/login', adminLimiter, (req, res) => {
   const { username, password } = req.body;
